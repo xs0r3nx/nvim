@@ -44,11 +44,18 @@ require('lualine').setup {
 }
 vim.cmd("syntax on")
 vim.cmd("set termguicolors")
-vim.cmd("set tabstop=2")
-vim.cmd("set shiftwidth=2")
-vim.cmd("set softtabstop=2")
+vim.cmd("set tabstop=4")
+vim.cmd("set shiftwidth=4")
+vim.cmd("set softtabstop=4")
 vim.cmd("set relativenumber")
 vim.cmd("set number")
 vim.cmd("colorscheme mountain")
+vim.opt.clipboard:append("unnamedplus")
 local builtin = require('telescope.builtin')
+require('mini.indentscope').setup {
+
+  -- Which character to use for drawing scope indicator
+  symbol = '',
+}
+
 vim.keymap.set('n', '<C-f>', builtin.find_files, { desc = 'Telescope find files' })
