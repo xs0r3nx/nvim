@@ -59,3 +59,42 @@ require('mini.indentscope').setup {
 }
 
 vim.keymap.set('n', '<C-f>', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<C-s>', function()
+  require('telescope.builtin').find_files({
+    cwd = 'src',
+  })
+end, { desc = 'Telescope find files in src/' })
+vim.keymap.set('n', '<leader>cd', function()
+  vim.cmd('!cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build/debug && cmake --build build/debug --config Debug')
+end, { desc = 'Configure & Build Debug' })
+vim.keymap.set('n', '<leader>cr', function()
+  vim.cmd('!cmake -DCMAKE_BUILD_TYPE=Release -S . -B build/release && cmake --build build/release --config Release')
+end, { desc = 'Configure & Build Release' })
+vim.keymap.set('n', '<leader>dr', function()
+  vim.cmd('!cmake -DCMAKE_BUILD_TYPE=Release -S . -B build/release && cmake --build build/release --config Release')
+end, { desc = 'Configure & Build Release' })
+vim.keymap.set('n', '<leader>rd', function()
+  local handle = io.popen("find build/debug -maxdepth 1 -type f -executable")
+  local result = handle:read("*a")
+  handle:close()
+
+  local exe = result:match("[^\r\n]+") -- get first line
+  if exe then
+    vim.cmd('! ' .. exe)
+  else
+    print("No executable found in build/debug")
+  end
+end, { desc = 'Run first Debug executable' })
+vim.keymap.set('n', '<leader>rr', function()
+  local handle = io.popen("find build/release -maxdepth 1 -type f -executable")
+  local result = handle:read("*a")
+  handle:close()
+
+  local exe = result:match("[^\r\n]+")
+  if exe then
+    vim.cmd('! ' .. exe)
+  else
+    print("No executable found in build/release")
+  end
+end, { desc = 'Run first Release executable' })
+
