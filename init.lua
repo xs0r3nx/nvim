@@ -97,4 +97,4 @@ vim.keymap.set('n', '<leader>rr', function()
     print("No executable found in build/release")
   end
 end, { desc = 'Run first Release executable' })
-
+vim.keymap.set('n', '<leader>s', '<cmd>Telescope lsp_document_symbols<CR>')
